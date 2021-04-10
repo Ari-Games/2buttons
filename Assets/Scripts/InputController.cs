@@ -17,6 +17,7 @@ public class InputController : MonoBehaviour
     {
         combinations = new List<Combination>();
         AddCombination();
+        AddCombination("ADA");
         inputBuffer = new InputBuffer(5);
     }
 
@@ -48,6 +49,7 @@ public class InputController : MonoBehaviour
         if (Time.time - inputBuffer.LastTime>1f)
         {
             inputBuffer.Clear();
+            //FirstLevelHit(keyCode);
         }
         Combination currenCombination = inputBuffer.CheckBuffer(combinations);
         if (currenCombination!= null)
@@ -56,7 +58,7 @@ public class InputController : MonoBehaviour
             HitByCombination(currenCombination);
             return;
         }
-        FirstLevelHit(keyCode);
+        
        
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum SwordEffect{
-    frameball,ereikball
+    frameball,ereikball,fireshot,whiteshield
 }
 public class HitController : MonoBehaviour
 {
