@@ -32,15 +32,13 @@ namespace Assets.Scripts
             }
             buffer.Append(input);
             if(buffer.Length > size)
-            {
-                Debug.Log("Rem");
+            {                
                 buffer.Remove(0, 1);// remove the first elem
             }
             lasttime = Time.time;
         }
         public void Clear()
         {
-            Debug.Log("Rem");
             buffer.Clear();
         }
         public Combination CheckBuffer(List<Combination> combinations)

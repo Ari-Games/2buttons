@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts;
 using System.Text;
+using System;
+
 public class InputController : MonoBehaviour
 {
     [SerializeField]
@@ -10,6 +12,7 @@ public class InputController : MonoBehaviour
 
     List<Assets.Scripts.Combination> combinations;
     InputBuffer inputBuffer;
+    System.Random random = new System.Random();
     void Start()
     {
         combinations = new List<Combination>();
@@ -17,9 +20,9 @@ public class InputController : MonoBehaviour
         inputBuffer = new InputBuffer(5);
     }
 
-    void AddCombination(string comboName = "AA")
+    public void AddCombination(string comboName = "AA",int damage = 5)
     {
-        combinations.Add(new Combination(5,comboName));
+        combinations.Add(new Combination(damage,comboName));
     }
     void Update()
     {
@@ -27,16 +30,18 @@ public class InputController : MonoBehaviour
     }
     void ProcessInput()
     {
-        
+        char? keyCode = null;
         if (Input.GetKeyDown(KeyCode.A))
         {
             //animator.SetTrigger("A");
+            keyCode = 'A';
             inputBuffer.AddBuffer('A');
             Debug.Log('A');
-        }
+        } else
         if (Input.GetKeyDown(KeyCode.D))
         {
             //animator.SetTrigger("D");
+            keyCode = 'D';
             inputBuffer.AddBuffer('D');
             Debug.Log('D');
         }
@@ -48,6 +53,23 @@ public class InputController : MonoBehaviour
         if (currenCombination!= null)
         {
             Debug.Log("Found combination - " + currenCombination.ComboName);
+            HitByCombination(currenCombination);
+            return;
+        }
+        FirstLevelHit(keyCode);
+       
+    }
+
+    private void HitByCombination(Combination combination)
+    {
+        animator.SetTrigger(combination.ComboName.Length + "_" + random.Next(1, 3));
+    }
+
+    void FirstLevelHit(char? keyCode)
+    {
+        if (keyCode!=null)
+        {
+            animator.SetTrigger(keyCode.ToString());
         }
     }
 }
