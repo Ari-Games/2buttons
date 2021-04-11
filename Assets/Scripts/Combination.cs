@@ -26,6 +26,14 @@ namespace Assets.Scripts
                 return comboName;
             }
         }
+
+        public int Damage
+        {
+            get
+            {
+                return damage;
+            }
+        }
         
     }
 }

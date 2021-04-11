@@ -14,7 +14,6 @@ public class HitController : MonoBehaviour
         if (!swordEffects[index].isPlaying)
         {
             swordEffects[index].Play();
-            Debug.Log("Play");
         }        
  
         
@@ -23,6 +22,5 @@ public class HitController : MonoBehaviour
     {
         swordEffects[(int)swordEffect].Stop();
 
-        Debug.Log("Stop");
     }
 }
