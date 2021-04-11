@@ -32,12 +32,12 @@ public class InputController : MonoBehaviour
 
     void NewCombination()
     {
-        var len = random.Next(1,5);
+        var len = random.Next(1,4);
         StringBuilder combo = new StringBuilder(len);
         char[] letters = new char[] { 'A', 'D' };
         for (int i = 0; i < len; i++)
         {
-            combo[i] = letters[random.Next(0, 2)];
+            combo.Append(letters[random.Next(0, 1)]);
         }
         combinations.Add(new Combination(combo.Length,combo.ToString()));
 

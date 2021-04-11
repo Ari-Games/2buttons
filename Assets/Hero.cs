@@ -15,6 +15,8 @@ public class Hero : MonoBehaviour
 
     public static int points = 1;
     EnemyController targetEnemy = null;
+
+    Stack<int> attacks = new Stack<int>();
     void Start()
     {
         health = MaxHealth;
@@ -36,14 +38,15 @@ public class Hero : MonoBehaviour
         health -= damage;
     }
 
-    private void OnTriggerEnter(Collider other)
+
+    private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (other.tag == "Enemy" && attacks.Count !=0)
         {
-            targetEnemy = other.gameObject.GetComponent<EnemyController>();
-            Debug.Log("Entered");
+            int damage = attacks.Pop();
+            other.gameObject.GetComponent<EnemyController>().TakeDamage(damage);
+
         }
-       
     }
     private void OnTriggerExit(Collider other)
     {
@@ -51,7 +54,7 @@ public class Hero : MonoBehaviour
     }
     void Attack(int damage)
     {
-        targetEnemy?.TakeDamage(damage);
-        Debug.Log("Attack");
+        attacks.Push(damage);
+
     }
 }

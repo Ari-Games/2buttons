@@ -17,14 +17,17 @@ public class EnemyController : MonoBehaviour
     private bool isAttack = false;
     public float TimeAttack = 0.5f;
 
-
+    private void Awake()
+    {
+        Movement = GetComponent<EnemyMovement>();
+    }
     private IEnumerator Start()
     {
         yield return null;
         MaxHealth = Health;
-        Movement = GetComponent<EnemyMovement>();
+        //Movement = GetComponent<EnemyMovement>();
         anim = GetComponent<Animator>();
-        Movement.To(Target.position);
+        //Movement.To(Target.position);
         SetAnim("Run");
     }
 
@@ -59,7 +62,7 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator Dead()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }
     private void Update()
@@ -82,7 +85,7 @@ public class EnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(TimeAttack);
             anim.SetTrigger("Attack");
-            Sensor.hero.TakeHealth(3);
+            TakeDamage(1f);
         }
     }
 }

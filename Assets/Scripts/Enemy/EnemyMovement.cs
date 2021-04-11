@@ -9,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
     public float Speed;
     private NavMeshAgent agent;
 
-    private void Start()
+    private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = Speed;
@@ -18,7 +18,6 @@ public class EnemyMovement : MonoBehaviour
     public void To(Vector3 point)
     {
         agent.SetDestination(point);
-        transform.rotation.SetLookRotation(point);
     }
 
 }
