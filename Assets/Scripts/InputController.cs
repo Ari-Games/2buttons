@@ -4,11 +4,15 @@ using UnityEngine;
 using Assets.Scripts;
 using System.Text;
 using System;
+using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
     [SerializeField]
     Animator animator;
+
+    [SerializeField]
+    Text combinationsList;
 
     public delegate void Attack(int damage);
     public static event Attack OnAttack;
@@ -30,22 +34,31 @@ public class InputController : MonoBehaviour
         combinations.Add(new Combination(damage,comboName));
     }
 
-    void NewCombination()
+    void NewCombination(string comboName)
     {
-        var len = random.Next(1,4);
-        StringBuilder combo = new StringBuilder(len);
-        char[] letters = new char[] { 'A', 'D' };
-        for (int i = 0; i < len; i++)
+        if (combinations.Count >= 2)
         {
-            combo.Append(letters[random.Next(0, 1)]);
+            combinations.Clear();
         }
-        combinations.Add(new Combination(combo.Length,combo.ToString()));
+        
+        combinations.Add(new Combination(comboName.Length,comboName));
 
     }
     void Update()
     {
         ProcessInput();
+        UpdateCombinationsList();
     }
+
+    private void UpdateCombinationsList()
+    {
+        combinationsList.text = "";
+        foreach (var item in combinations)
+        {
+            combinationsList.text += item.ComboName + '\n';
+        }
+    }
+
     void ProcessInput()
     {
         char? keyCode = null;
@@ -78,6 +91,7 @@ public class InputController : MonoBehaviour
        
     }
 
+    static string[] triggers = new string[] {"2_1", "2_2", "3_1", "3_2","4_1" };
     private void HitByCombination(Combination combination,char? keyCode)
     {
         if (combination.ComboName.Length == 1)
@@ -85,7 +99,9 @@ public class InputController : MonoBehaviour
             FirstLevelHit(keyCode);
             return;
         }
-        animator.SetTrigger(combination.ComboName.Length + "_" + random.Next(1, 3));
+        int index = Mathf.Abs(combination.GetHashCode()) % triggers.Length;
+        string trigger = triggers[index];
+        animator.SetTrigger(trigger);
         OnAttack(combination.Damage);
     }
 

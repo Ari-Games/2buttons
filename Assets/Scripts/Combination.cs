@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts
 {
-    class Combination
+    public class Combination
     {
         string comboName;
         int damage;

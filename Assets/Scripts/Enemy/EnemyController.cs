@@ -25,9 +25,9 @@ public class EnemyController : MonoBehaviour
     {
         yield return null;
         MaxHealth = Health;
-        //Movement = GetComponent<EnemyMovement>();
+        Movement = GetComponent<EnemyMovement>();
         anim = GetComponent<Animator>();
-        //Movement.To(Target.position);
+        Movement.To(Target.position);
         SetAnim("Run");
     }
 
@@ -64,6 +64,7 @@ public class EnemyController : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);
+        Hero.points += 5;
     }
     private void Update()
     {

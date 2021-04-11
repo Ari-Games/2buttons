@@ -14,7 +14,6 @@ public class Hero : MonoBehaviour
     int health;
 
     public static int points = 1;
-    EnemyController targetEnemy = null;
 
     Stack<int> attacks = new Stack<int>();
     void Start()
@@ -48,10 +47,7 @@ public class Hero : MonoBehaviour
 
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        targetEnemy = null;
-    }
+
     void Attack(int damage)
     {
         attacks.Push(damage);

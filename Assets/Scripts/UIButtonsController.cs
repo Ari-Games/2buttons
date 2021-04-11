@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 public class UIButtonsController : MonoBehaviour
 {
     [SerializeField]
@@ -16,23 +17,26 @@ public class UIButtonsController : MonoBehaviour
     [SerializeField]
     GameObject NewCombinationText;
 
+    
+
     Color simpleColor;
+
     void Start()
     {
         simpleColor = AButton.color;
         EventManager.newCombination += PostEnable;
     }
-    void PostEnable()
+    void PostEnable(string comboName)
     {
         NewCombinationText.SetActive(true);
         StartCoroutine(DisableFromSeconds(NewCombinationText,4));
-
     }
-    IEnumerator DisableFromSeconds(GameObject go,float seconds)
+    public static IEnumerator DisableFromSeconds(GameObject go,float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        go.SetActive(false);
+        go?.SetActive(false);
     }
+    
     void Update()
     {
         if (Input.GetKey(KeyCode.A))
