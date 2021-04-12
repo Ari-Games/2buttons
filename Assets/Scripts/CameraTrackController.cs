@@ -19,8 +19,15 @@ public class CameraTrackController : MonoBehaviour
     }
     public void Stop()
     {
+        //если один раз запускали то пропустить
+        if (PlayerPrefs.HasKey("Scene") && PlayerPrefs.GetInt("Scene") == 1)
+        {
+            return;
+        }
         director.Pause();
         CutSceneDirector.Play();
+        PlayerPrefs.SetInt("Scene", 1);
+
     }
     void Update()
     {

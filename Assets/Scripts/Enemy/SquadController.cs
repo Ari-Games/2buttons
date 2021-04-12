@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SquadController : MonoBehaviour
 {
+    public delegate void EndCurrentButtle();
+    public static event EndCurrentButtle OnCurrentButtleEnd;
     [HideInInspector]
     public List<EnemyController> Units;
     [SerializeField] private List<SampleComponent> sample;
@@ -27,13 +29,17 @@ public class SquadController : MonoBehaviour
         SetSample(0);
         Destination();
         //Go(Target);
-        EventManager.OnGameStart += Go;
+        EventManager.OnBattleStart += Go;
     }
 
     private void LateUpdate()
     {
         if (Units.Count == 0)
+        {
+            OnCurrentButtleEnd();
             Destroy(gameObject);
+        }
+            
         if (Target != null)
             Destination();
     }

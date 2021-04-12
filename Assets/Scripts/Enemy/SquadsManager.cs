@@ -11,6 +11,8 @@ public class SquadsManager : MonoBehaviour
 
     private SquadController currentSquad;
 
+    [SerializeField]
+    BossController boss;
     private void Start()
     {
         Squads = new List<SquadController>();
@@ -21,6 +23,7 @@ public class SquadsManager : MonoBehaviour
         }
     }
 
+    /*
     private void UpdateSquads()
     {
         var nSquads = new List<SquadController>();
@@ -28,14 +31,24 @@ public class SquadsManager : MonoBehaviour
             if (squad != null && squad.Units.Count > 0)
                 nSquads.Add(squad);
         Squads = nSquads;
-    }
+    }*/
     private void Update()
     {
+        if (Squads.Count == 0)
+        {
+            boss.enabled = true;
+            Destroy(gameObject,0.5f);
+        }
         if (Squads.Count > 0 && (currentSquad == null || currentSquad.Units.Count == 0))
         {
-            currentSquad = Squads[Squads.Count-1];
-            currentSquad.gameObject.SetActive(true);
+            Squads.Remove(currentSquad);
+            if (Squads.Count > 0)
+            {
+                currentSquad = Squads[Squads.Count - 1];
+                currentSquad.gameObject.SetActive(true);
+            }
+            
         }
-        UpdateSquads();
+
     }
 }

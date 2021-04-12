@@ -16,10 +16,14 @@ public class Hero : MonoBehaviour
     public static int points = 1;
 
     Stack<int> attacks = new Stack<int>();
+
+    public delegate void GameOver();
+    public static event GameOver OnGameOver;
     void Start()
     {
         health = MaxHealth;
         InputController.OnAttack += Attack;
+
     }
 
     void Update()
@@ -32,6 +36,7 @@ public class Hero : MonoBehaviour
         if (damage > health)
         {
             health = 0;
+            OnGameOver();
             
         }
         health -= damage;

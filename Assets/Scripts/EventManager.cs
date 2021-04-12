@@ -9,8 +9,12 @@ public class EventManager : MonoBehaviour
     public static event NewCombination newCombination;
 
     public delegate void StartGame();
-    public static event StartGame OnGameStart;
+    public static event StartGame OnBattleStart;
 
+    private void Start()
+    {
+        SquadController.OnCurrentButtleEnd += CurrentBattleEnd;
+    }
     string CreateCombination()
     {
         var len = Random.Range(1, 5);
@@ -32,6 +36,11 @@ public class EventManager : MonoBehaviour
     }
     public void GameStart()
     {
-        OnGameStart();
+        OnBattleStart();
+        
+    }
+    public void CurrentBattleEnd()
+    {
+        OnBattleStart();
     }
 }
