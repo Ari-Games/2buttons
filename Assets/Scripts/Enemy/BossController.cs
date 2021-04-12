@@ -30,7 +30,7 @@ public class BossController : MonoBehaviour
         return Vector3.Distance(transform.position, TargetPosition.position) < 2f;
     }
 
-    private void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         Health -= damage < Health ? damage : 0;
         anim.SetTrigger("Damage");

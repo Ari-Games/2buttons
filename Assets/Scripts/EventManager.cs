@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class EventManager : MonoBehaviour
 {
     public delegate void NewCombination(string combo); 
@@ -11,9 +11,22 @@ public class EventManager : MonoBehaviour
     public delegate void StartGame();
     public static event StartGame OnBattleStart;
 
+    [SerializeField]
+    GameObject GameOverText;
+
     private void Start()
     {
         SquadController.OnCurrentButtleEnd += CurrentBattleEnd;
+        Hero.OnGameOver += GameOver;
+    }
+    void GameOver()
+    {
+        GameOverText.SetActive(true);
+    }
+    IEnumerator GameRestart()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene(0);
     }
     string CreateCombination()
     {

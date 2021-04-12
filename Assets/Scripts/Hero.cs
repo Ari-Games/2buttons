@@ -50,14 +50,20 @@ public class Hero : MonoBehaviour
             int damage = attacks.Pop();
             other.gameObject.GetComponent<EnemyController>().TakeDamage(damage);
         }
+        if (other.tag == "Boss" && attacks.Count != 0)
+        {
+            int damage = attacks.Pop();
+            other.gameObject.GetComponent<BossController>().TakeDamage(damage);
+        }
     }
     RaycastHit hit;
     void Shoot()
     {
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 100) && hit.collider.tag == "Enemy")
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 100) && (hit.collider.tag == "Enemy" || hit.collider.tag == "Boss"))
         {
-            hit.collider.gameObject.GetComponent<EnemyController>().TakeDamage(10);
+            hit.collider.gameObject.GetComponent<EnemyController>()?.TakeDamage(10);
+            hit.collider.gameObject.GetComponent<BossController>()?.TakeDamage(10);
         }
 
     }
