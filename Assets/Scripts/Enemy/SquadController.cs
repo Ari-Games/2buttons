@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SquadController : MonoBehaviour
 {
+    [HideInInspector]
     public List<EnemyController> Units;
     [SerializeField] private List<SampleComponent> sample;
 
@@ -25,21 +26,33 @@ public class SquadController : MonoBehaviour
         last = transform;
         SetSample(0);
         Destination();
+        //Go(Target);
+        EventManager.OnGameStart += Go;
     }
 
     private void LateUpdate()
     {
-       
+        if (Units.Count == 0)
+            Destroy(gameObject);
+        if (Target != null)
+            Destination();
+    }
+    private void Update()
+    {
+        
+    }
+    public void Go()
+    {
+        //Target = target;
         last = sample[index].transform;
-        //last.forward = (Target.position - last.position).normalized;
+        last.eulerAngles = new Vector3(0, -90, 0);
         last.position = Target.position;
         Destination();
-        
     }
 
     private void UpdateUnits()
     {
-        List<EnemyController> nUnits = new List<EnemyController>();
+        var nUnits = new List<EnemyController>();
         foreach (var unit in Units)
             if (unit != null)
                 nUnits.Add(unit);
@@ -48,10 +61,12 @@ public class SquadController : MonoBehaviour
 
     private void Destination()
     {
+        //UpdateUnits();
         UpdateUnits();
         for (int i = 0; i < Units.Count; i++)
         {
-            Units[i].Movement.To(sample[index].Points[i].position);
+            if (Units[i] != null && sample[index].Points != null)
+                Units[i].Movement.To(sample[index].Points[i].position);
         }
     }
 

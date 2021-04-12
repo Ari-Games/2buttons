@@ -64,27 +64,22 @@ public class InputController : MonoBehaviour
         char? keyCode = null;
         if (Input.GetKeyDown(KeyCode.A))
         {
-            //animator.SetTrigger("A");
             keyCode = 'A';
             inputBuffer.AddBuffer('A');
-            Debug.Log('A');
         } else
         if (Input.GetKeyDown(KeyCode.D))
         {
-            //animator.SetTrigger("D");
             keyCode = 'D';
             inputBuffer.AddBuffer('D');
-            Debug.Log('D');
         }
         if (Time.time - inputBuffer.LastTime>1f)
         {
             inputBuffer.Clear();
-            //FirstLevelHit(keyCode);
         }
         Combination currenCombination = inputBuffer.CheckBuffer(combinations);
         if (currenCombination!= null)
         {
-            Debug.Log("Found combination - " + currenCombination.ComboName);
+            //Debug.Log("Found combination - " + currenCombination.ComboName);
             HitByCombination(currenCombination,keyCode);
             return;
         }       

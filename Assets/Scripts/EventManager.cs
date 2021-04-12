@@ -9,7 +9,7 @@ public class EventManager : MonoBehaviour
     public static event NewCombination newCombination;
 
     public delegate void StartGame();
-    public static event StartGame onGameStart;
+    public static event StartGame OnGameStart;
 
     string CreateCombination()
     {
@@ -29,5 +29,9 @@ public class EventManager : MonoBehaviour
             Hero.points -= 5;
             newCombination(CreateCombination());
         }
+    }
+    public void GameStart()
+    {
+        OnGameStart();
     }
 }

@@ -17,7 +17,12 @@ public class EnemyMovement : MonoBehaviour
 
     public void To(Vector3 point)
     {
-        agent.SetDestination(point);
+        if (agent != null && gameObject != null && agent.isActiveAndEnabled)
+        {
+            agent.SetDestination(point);
+            var direction = (point + transform.position).normalized;
+            transform.forward = direction;
+        }
     }
 
 }

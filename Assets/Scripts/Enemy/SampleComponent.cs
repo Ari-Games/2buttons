@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SampleComponent : MonoBehaviour
 {
+    [HideInInspector]
     public List<Transform> Points;
 
     void Awake()

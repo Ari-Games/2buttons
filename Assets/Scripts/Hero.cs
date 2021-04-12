@@ -44,13 +44,24 @@ public class Hero : MonoBehaviour
         {
             int damage = attacks.Pop();
             other.gameObject.GetComponent<EnemyController>().TakeDamage(damage);
-
         }
     }
+    RaycastHit hit;
+    void Shoot()
+    {
 
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 100) && hit.collider.tag == "Enemy")
+        {
+            hit.collider.gameObject.GetComponent<EnemyController>().TakeDamage(10);
+        }
+
+    }
+    void FullHP()
+    {
+        health = MaxHealth;
+    }
     void Attack(int damage)
     {
         attacks.Push(damage);
-
     }
 }

@@ -20,15 +20,15 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         Movement = GetComponent<EnemyMovement>();
+        anim = GetComponent<Animator>();
+        MaxHealth = Health;
     }
     private IEnumerator Start()
     {
         yield return null;
-        MaxHealth = Health;
-        Movement = GetComponent<EnemyMovement>();
-        anim = GetComponent<Animator>();
-        Movement.To(Target.position);
-        SetAnim("Run");
+        anim.SetBool("Run", true);
+        //Movement = GetComponent<EnemyMovement>();
+        //Movement.To(Target.position);
     }
 
     private void AllAnimationsOff()
@@ -46,15 +46,15 @@ public class EnemyController : MonoBehaviour
     {
         if (Health < damage)
         {
-            Health = 0;
+            Health = 0f;
         }
         else
         {
             Health -= damage;
             var scale = HealthBar.localScale;
-            var delta = damage/MaxHealth;
-            var deltaZ = scale.z - delta;
-            scale.z = deltaZ;
+            //var delta = damage/MaxHealth;
+            //var deltaZ = scale.z - delta;
+            scale.z = Health/MaxHealth;
             HealthBar.localScale = scale;
             anim.SetTrigger("Damage");
         }
@@ -62,7 +62,7 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator Dead()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.8f);
         Destroy(gameObject);
         Hero.points += 5;
     }
@@ -78,6 +78,8 @@ public class EnemyController : MonoBehaviour
             anim.SetTrigger("Dead");
             StartCoroutine(Dead());
         }
+        if (anim.GetBool("Run") == false)
+            anim.SetBool("Run", true);
     }
 
     private IEnumerator Attack()
@@ -86,7 +88,8 @@ public class EnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(TimeAttack);
             anim.SetTrigger("Attack");
-            TakeDamage(1f);
+            Target.GetComponent<Hero>().TakeHealth(1);
+            //Debug.Log("Detect !!!");
         }
     }
 }
