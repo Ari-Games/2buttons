@@ -56,4 +56,9 @@ public class EventManager : MonoBehaviour
     {
         OnBattleStart();
     }
+    public void ApplicationExit()
+    {
+        PlayerPrefs.DeleteKey("Scene");
+        Application.Quit();
+    }
 }
