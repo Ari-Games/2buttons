@@ -49,13 +49,22 @@ public class SquadController : MonoBehaviour
     }
     public void Go()
     {
+        //StartCoroutine(StepFrame());
         //Target = target;
         last = sample[index].transform;
         last.eulerAngles = new Vector3(0, -90, 0);
         last.position = Target.position;
         Destination();
     }
-
+    IEnumerator StepFrame()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        last = sample[index].transform;
+        last.eulerAngles = new Vector3(0, -90, 0);
+        last.position = Target.position;
+        Destination();
+    }
     private void UpdateUnits()
     {
         var nUnits = new List<EnemyController>();
@@ -89,5 +98,9 @@ public class SquadController : MonoBehaviour
         sample[index].transform.forward = last.forward;
         sample[index].transform.position = last.position;
         Destination();
+    }
+    public void OnDestroy()
+    {
+        EventManager.OnBattleStart -= Go;
     }
 }

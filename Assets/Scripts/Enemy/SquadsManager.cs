@@ -37,7 +37,8 @@ public class SquadsManager : MonoBehaviour
         if (Squads.Count == 0)
         {
             boss.enabled = true;
-            Destroy(gameObject,0.5f);
+            gameObject.SetActive(false);
+            //Destroy(gameObject,0.5f);
         }
         if (Squads.Count > 0 && (currentSquad == null || currentSquad.Units.Count == 0))
         {

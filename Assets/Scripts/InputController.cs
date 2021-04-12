@@ -86,6 +86,7 @@ public class InputController : MonoBehaviour
        
     }
 
+    static int fightLevel = 0;
     static string[] triggers = new string[] {"2_1", "2_2", "3_1", "3_2","4_1" };
     private void HitByCombination(Combination combination,char? keyCode)
     {
@@ -97,7 +98,7 @@ public class InputController : MonoBehaviour
         int index = Mathf.Abs(combination.GetHashCode()) % triggers.Length;
         string trigger = triggers[index];
         animator.SetTrigger(trigger);
-        OnAttack(combination.Damage);
+        OnAttack(combination.Damage*2);
     }
 
     void FirstLevelHit(char? keyCode)

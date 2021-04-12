@@ -62,8 +62,8 @@ public class Hero : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, 100) && (hit.collider.tag == "Enemy" || hit.collider.tag == "Boss"))
         {
-            hit.collider.gameObject.GetComponent<EnemyController>()?.TakeDamage(10);
-            hit.collider.gameObject.GetComponent<BossController>()?.TakeDamage(10);
+            hit.collider.gameObject.GetComponent<EnemyController>()?.TakeDamage(20);
+            hit.collider.gameObject.GetComponent<BossController>()?.TakeDamage(30);
         }
 
     }

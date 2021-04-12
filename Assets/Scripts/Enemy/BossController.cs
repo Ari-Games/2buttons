@@ -16,6 +16,9 @@ public class BossController : MonoBehaviour
     public float MaxHealth = 100;
     public float SpeedAttack = 2f;
 
+    public delegate void GameWin();
+    public static event GameWin OnGameWin;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -48,6 +51,7 @@ public class BossController : MonoBehaviour
         if (Health <= 0)
         {
             StartCoroutine(Dead());
+            
         }   
         
         if (!IsReachedDestination())
@@ -67,6 +71,7 @@ public class BossController : MonoBehaviour
     {
         anim.SetBool("Dead", true);
         yield return new WaitForSeconds(2f);
+        OnGameWin();
         Destroy(gameObject);
     }
 

@@ -14,19 +14,30 @@ public class EventManager : MonoBehaviour
     [SerializeField]
     GameObject GameOverText;
 
+    [SerializeField]
+    GameObject GameWinText;
+
     private void Start()
     {
         SquadController.OnCurrentButtleEnd += CurrentBattleEnd;
         Hero.OnGameOver += GameOver;
+        BossController.OnGameWin += GameWin;
     }
     void GameOver()
     {
         GameOverText.SetActive(true);
+        StartCoroutine(GameRestart());
     }
     IEnumerator GameRestart()
     {
         yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(0,LoadSceneMode.Single);
+    }
+
+    void GameWin()
+    {
+        GameWinText.SetActive(true);
+        StartCoroutine(GameRestart());
     }
     string CreateCombination()
     {
@@ -49,8 +60,14 @@ public class EventManager : MonoBehaviour
     }
     public void GameStart()
     {
-        OnBattleStart();
+        StartCoroutine(StepFrame());
         
+    }
+    IEnumerator StepFrame()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        OnBattleStart();
     }
     public void CurrentBattleEnd()
     {
@@ -58,7 +75,10 @@ public class EventManager : MonoBehaviour
     }
     public void ApplicationExit()
     {
-        PlayerPrefs.DeleteKey("Scene");
         Application.Quit();
+    }
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.DeleteKey("Scene");
     }
 }
